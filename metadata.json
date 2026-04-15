@@ -1,0 +1,5 @@
+{
+  "name": "VendoraPos",
+  "description": "A modern, real-time Point of Sale and Inventory Management system for micro and small businesses, featuring admin dashboards, vendor tools, and secure Firebase integration.",
+  "requestFramePermissions": []
+}

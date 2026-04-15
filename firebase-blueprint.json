@@ -1,0 +1,206 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user (Admin or Vendor)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "username": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "vendor", "supplier"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "studentId": { "type": "string", "description": "Student ID for Vendor, Personal ID for Supplier/Admin" },
+        "mobileNumber": { "type": "string" },
+        "gender": { "type": "string", "enum": ["Male", "Female"] },
+        "businessAddress": { "type": "string" },
+        "shippingAddress": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "language": { "type": "string", "enum": ["en", "ms"] },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "lowStock": { "type": "boolean" },
+            "inactiveUsers": { "type": "boolean" },
+            "emailAlerts": { "type": "boolean" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Inventory item",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "integer" },
+        "category": { "type": "string" },
+        "imageURL": { "type": "string", "format": "uri" },
+        "vendorId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "stock", "category", "vendorId"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "POS Transaction",
+      "type": "object",
+      "properties": {
+        "total": { "type": "number" },
+        "items": { "type": "array" },
+        "paymentMethod": { "type": "string", "enum": ["Cash", "QR"] },
+        "cashReceived": { "type": "number" },
+        "change": { "type": "number" },
+        "vendorId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["total", "items", "paymentMethod", "vendorId", "timestamp"]
+    },
+    "GlobalSettings": {
+      "title": "Global Settings",
+      "description": "System-wide configuration",
+      "type": "object",
+      "properties": {
+        "lowStockThreshold": { "type": "integer" },
+        "currency": { "type": "string" },
+        "tax": { "type": "number" },
+        "receiptFooter": { "type": "string" }
+      }
+    },
+    "SupportTicket": {
+      "title": "Support Ticket",
+      "description": "Bug report or problem submitted by a vendor",
+      "type": "object",
+      "properties": {
+        "vendorId": { "type": "string", "description": "UID of the reporter" },
+        "vendorName": { "type": "string" },
+        "vendorEmail": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "in-progress", "resolved"] },
+        "adminReply": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["vendorId", "subject", "message", "status", "createdAt"]
+    },
+    "CashTransaction": {
+      "title": "Cash Transaction",
+      "description": "Manual cash in or cash out from the drawer",
+      "type": "object",
+      "properties": {
+        "vendorId": { "type": "string" },
+        "type": { "type": "string", "enum": ["in", "out"] },
+        "amount": { "type": "number" },
+        "reason": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["vendorId", "type", "amount", "reason", "timestamp"]
+    },
+    "DailySettle": {
+      "title": "Daily Settle",
+      "description": "End of Day reconciliation report",
+      "type": "object",
+      "properties": {
+        "vendorId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "openingBalance": { "type": "number" },
+        "totalSales": { "type": "number" },
+        "totalCashSales": { "type": "number" },
+        "totalQrSales": { "type": "number" },
+        "totalCashIn": { "type": "number" },
+        "totalCashOut": { "type": "number" },
+        "expectedCash": { "type": "number" },
+        "actualCash": { "type": "number" },
+        "difference": { "type": "number" },
+        "notes": { "type": "string" },
+        "transactions": { "type": "array" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["vendorId", "date", "openingBalance", "totalSales", "expectedCash", "actualCash", "timestamp"]
+    },
+    "Supply": {
+      "title": "Supply",
+      "description": "Product offered by a supplier",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "unit": { "type": "string", "description": "e.g., kg, box, pack" },
+        "category": { "type": "string" },
+        "imageURL": { "type": "string", "format": "uri" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "supplierId", "createdAt"]
+    },
+    "SupplyOrder": {
+      "title": "Supply Order",
+      "description": "Order placed by a vendor to a supplier",
+      "type": "object",
+      "properties": {
+        "vendorId": { "type": "string" },
+        "vendorName": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "shippingAddress": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "shipped", "received", "cancelled"] },
+        "scheduledDate": { "type": "string", "format": "date-time" },
+        "isMonthly": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["vendorId", "supplierId", "items", "totalAmount", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Inventory items"
+    },
+    "/sales/{saleId}": {
+      "schema": "Sale",
+      "description": "Transaction records"
+    },
+    "/settings/global": {
+      "schema": "GlobalSettings",
+      "description": "Global system settings"
+    },
+    "/reports/{reportId}": {
+      "schema": "SupportTicket",
+      "description": "Vendor support requests and bug reports"
+    },
+    "/cash_transactions/{txId}": {
+      "schema": "CashTransaction",
+      "description": "Manual cash movements"
+    },
+    "/daily_settles/{settleId}": {
+      "schema": "DailySettle",
+      "description": "EOD reports"
+    },
+    "/supplies/{supplyId}": {
+      "schema": "Supply",
+      "description": "Products offered by suppliers"
+    },
+    "/supply_orders/{orderId}": {
+      "schema": "SupplyOrder",
+      "description": "Vendor orders for supplies"
+    }
+  }
+}

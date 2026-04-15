@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+@layer base {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+  }
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+
+    #receipt-content,
+    #receipt-content * {
+      visibility: visible;
+    }
+
+    #receipt-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      background: white !important;
+      color: black !important;
+      padding: 20px;
+      border: none !important;
+    }
+
+    #receipt-content span,
+    #receipt-content h2,
+    #receipt-content p {
+      color: black !important;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+  }
+}
+
+/* Light Mode Overrides - SoftDash Aesthetic */
+:root.light {
+  --bg-primary: #f4f7fe;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e9edf7;
+  --text-primary: #2b3674;
+  --text-secondary: #707eae;
+  --text-tertiary: #a3aed0;
+  --border-color: rgba(226, 232, 240, 0.8);
+  --accent-blue: #4318ff;
+  --accent-blue-hover: #3311db;
+}
+
+.light body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Neutralize the dark gradient from Layout.tsx */
+.light .bg-gradient-to-br.from-gray-900 {
+  background: var(--bg-primary) !important;
+}
+
+/* Card and Container Backgrounds */
+.light .bg-gray-900,
+.light .bg-gray-900\/50,
+.light .bg-gray-900\/70,
+.light .bg-gray-900\/80,
+.light .bg-gray-900\/90,
+.light .bg-black,
+.light .bg-gray-950 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.light .bg-gray-800,
+.light .bg-gray-800\/50,
+.light .bg-gray-800\/30 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Text Colors */
+.light .text-white,
+.light .text-gray-100,
+.light .text-gray-300 {
+  color: var(--text-primary) !important;
+}
+
+.light .text-gray-400,
+.light .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+.light .text-gray-600 {
+  color: var(--text-tertiary) !important;
+}
+
+/* Borders and Shadows */
+.light .border-gray-800,
+.light .border-gray-700,
+.light .border-white\/5,
+.light .border-white\/10 {
+  border-color: var(--border-color) !important;
+}
+
+.light .rounded-2xl,
+.light .rounded-xl {
+  border-radius: 1.5rem !important;
+}
+
+.light .shadow-2xl,
+.light .shadow-lg {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Interactive Elements */
+.light .hover\:bg-gray-800:hover,
+.light .hover\:bg-gray-700:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.light .hover\:text-gray-100:hover {
+  color: var(--text-primary) !important;
+}
+
+.light input,
+.light select,
+.light textarea {
+  background-color: white !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+  border-radius: 0.75rem !important;
+}
+
+.light input::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* Specific component fixes for light mode */
+.light .bg-indigo-600 {
+  background-color: var(--accent-blue) !important;
+}
+
+.light .hover\:bg-indigo-500:hover {
+  background-color: var(--accent-blue-hover) !important;
+}
+
+.light .text-indigo-400,
+.light .text-indigo-500 {
+  color: var(--accent-blue) !important;
+}
+
+.light .bg-indigo-600\/10,
+.light .bg-indigo-500\/10 {
+  background-color: rgba(67, 24, 255, 0.05) !important;
+}
+
+/* Icons adaptation */
+.light .lucide {
+  color: var(--text-secondary);
+}
+
+.light .bg-indigo-600 .lucide,
+.light .text-white .lucide,
+.light .bg-red-600 .lucide,
+.light .bg-emerald-500 .lucide {
+  color: white !important;
+}
+
+/* Fix for sidebar active state */
+.light .bg-indigo-600.text-white {
+  background-color: var(--accent-blue) !important;
+  box-shadow: 0 10px 20px rgba(67, 24, 255, 0.15) !important;
+}
+
+/* Ensure homepage and auth pages stay dark and ignore light mode overrides */
+.light #homepage-container,
+.light #auth-container {
+  background-color: #050505 !important;
+  background-image: linear-gradient(to bottom right, #111827, #000000, #111827) !important;
+  color: white !important;
+}
+
+.light #homepage-container footer,
+.light #homepage-container nav,
+.light #homepage-container section,
+.light #homepage-container div:not(.bg-white),
+.light #auth-container div:not(.bg-white),
+.light #auth-container section {
+  background-color: transparent !important;
+}
+
+.light #homepage-container .bg-black,
+.light #auth-container .bg-black,
+.light #auth-container .bg-gray-950,
+.light #homepage-container .bg-gray-900,
+.light #auth-container .bg-gray-900 {
+  background-color: #050505 !important;
+}
+
+.light #homepage-container span,
+.light #homepage-container h1,
+.light #homepage-container h2,
+.light #homepage-container h3,
+.light #homepage-container p,
+.light #homepage-container a,
+.light #auth-container span,
+.light #auth-container h1,
+.light #auth-container h2,
+.light #auth-container h3,
+.light #auth-container p,
+.light #auth-container label {
+  color: white !important;
+}
+
+.light #homepage-container .text-gray-400,
+.light #homepage-container .text-gray-500,
+.light #auth-container .text-gray-400,
+.light #auth-container .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+.light #homepage-container .bg-white,
+.light #auth-container .bg-white {
+  background-color: white !important;
+  color: black !important;
+}
+
+.light #homepage-container .bg-white *,
+.light #auth-container .bg-white * {
+  color: black !important;
+}
+
+.light #homepage-container .border-white\/5,
+.light #homepage-container .border-white\/10,
+.light #auth-container .border-gray-700,
+.light #auth-container .border-gray-800 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.light #homepage-container .bg-indigo-600 {
+  background-color: #4f46e5 !important;
+}
+
+.light #homepage-container .hover\:bg-indigo-500:hover {
+  background-color: #6366f1 !important;
+}
